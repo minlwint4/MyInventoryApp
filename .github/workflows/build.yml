@@ -17,16 +17,19 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+      # Android APK ထုတ်ရန် Java လိုအပ်သောကြောင့် ထည့်သွင်းထားပါသည်
+      - name: Setup Java
+        uses: actions/setup-java@v4
         with:
-          channel: 'stable'
+          distribution: 'zulu'
+          java-version: '17'
 
       - name: Install Flet
         run: pip install flet
 
+      # ခွင့်ပြုချက်တောင်းပါက 'yes' ဟု အလိုလိုဖြေပေးရန် 'yes |' ကို ထည့်ထားပါသည်
       - name: Build APK
-        run: flet build apk
+        run: yes | flet build apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
